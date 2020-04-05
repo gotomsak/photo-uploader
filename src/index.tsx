@@ -1,12 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import App from './App';
 import * as serviceWorker from './serviceWorker';
+import Camera from '../src/components/camera';
+import LoginAuth from '../src/components/loginAuth'
+//import '../src/components/loginAuth'
+import './store'
+import LogoutAuth from './components/logoutAuth';
+import GetCloud from './components/getCloudPhoto';
+
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {/* <Camera /> */}
+    <LoginAuth/>
+    <LogoutAuth/>
+    <Camera></Camera>
+    <GetCloud></GetCloud>
+    {/* <div id='googleButton'></div> */}
   </React.StrictMode>,
   document.getElementById('root')
 );

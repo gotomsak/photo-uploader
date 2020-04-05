@@ -10,13 +10,25 @@
     "@types/node": "^12.12.31",
     "@types/react": "^16.9.25",
     "@types/react-dom": "^16.9.5",
+    "@types/react-webcam": "^3.0.0",
+    "@types/urlsafe-base64": "^1.0.28",
+    "autobind-decorator": "^2.4.0",
+    "axios": "^0.19.2",
+    "blob": "^0.1.0",
+    "fs": "0.0.1-security",
+    "googleapis": "^48.0.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-google-login": "^5.1.2",
+    "react-google-oauth": "^1.0.0",
     "react-scripts": "3.4.1",
-    "typescript": "^3.7.5"
+    "react-webcam": "^5.0.1",
+    "redux": "^4.0.5",
+    "typescript": "^3.7.5",
+    "urlsafe-base64": "^1.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "HTTPS=true react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
