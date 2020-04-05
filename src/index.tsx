@@ -2,22 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Camera from '../src/components/camera';
+//import Camera from '../src/components/camera';
 import LoginAuth from '../src/components/loginAuth'
 //import '../src/components/loginAuth'
-import './store'
-import LogoutAuth from './components/logoutAuth';
-import GetCloud from './components/getCloudPhoto';
+// import './store'
+// import LogoutAuth from './components/logoutAuth';
+// import GetCloud from './components/getCloudPhoto';
 
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Camera /> */}
+    
     <LoginAuth/>
-    <LogoutAuth/>
+    {/* <LogoutAuth/>
     <Camera></Camera>
-    <GetCloud></GetCloud>
-    {/* <div id='googleButton'></div> */}
+    <GetCloud></GetCloud> */}
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
