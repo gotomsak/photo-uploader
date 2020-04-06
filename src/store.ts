@@ -2,7 +2,7 @@ import { createStore } from 'redux'
 import * as api_key from '../src/assets/api_key.json'
 import axios, { AxiosInstance } from 'axios'
 import googleapis from 'googleapis'
-
+import qs from 'qs'
 /**
  * This is a reducer, a pure function with (state, action) => state signature.
  * It describes how an action transforms the state into the next state.
@@ -121,6 +121,13 @@ export async function sendGoogleMessage(state = sendGoogleMessageInit){
             
         )
         console.log(res)
+    }
+    if (state.type === 'getAppFolder'){
+        res = await instance.get(
+            '/drive/v3/files', (qs.stringify({mimeType: 'application/vnd.google-apps.folder'}) as any)
+        )
+        return res
+
     }
 }
 

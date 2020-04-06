@@ -8,15 +8,16 @@ import LoginAuth from '../src/components/loginAuth'
 import './store'
 import LogoutAuth from './components/logoutAuth';
 import GetCloud from './components/getCloudPhoto';
-
+import GoogleApiTest from './components/googleApiTest'
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <Camera /> */}
-    <LoginAuth/>
-    <LogoutAuth/>
+    {/* <LoginAuth/>
+    <LogoutAuth/> */}
     <Camera></Camera>
     <GetCloud></GetCloud>
+    <GoogleApiTest></GoogleApiTest>
     {/* <div id='googleButton'></div> */}
   </React.StrictMode>,
   document.getElementById('root')

@@ -26,11 +26,17 @@ class LoginAuth extends React.Component{
                 imageUrl: (response.profileObj.imageUrl as string)
             })
 
-        res = await store.sendGoogleMessage({type: 'createCloudFolder', img: 'none'})
+        //res = await store.sendGoogleMessage({type: 'createCloudFolder', img: 'none'})
+        res = await store.sendGoogleMessage({type: 'getAppFolder', img: 'none'})
         console.log(res)
     }
     responseGoogleError(response:any){
         return 'loginできませんでした'
+    }
+    checkAppFolder(){
+        let res: any;
+        res = store.sendGoogleMessage({type: 'getAppFolder', img: 'none'})
+        console.log(res)
     }
     render(){
         return(
@@ -45,6 +51,7 @@ class LoginAuth extends React.Component{
                     scope={"https://www.googleapis.com/auth/drive"}
                 />
                 <div>{this.responseGoogleError}</div>
+                <button onClick={this.checkAppFolder}>checkfolder</button>
             </div>
         )
     }
