@@ -41,15 +41,27 @@ class GoogleApiTest extends React.Component<any,any,googleOAuth2>{
         this.componentDidMount = this.componentDidMount.bind(this)
     }
     public componentDidMount(){
-        this.OAuth2Init()
+        const apis = google.getSupportedAPIs();
+        console.log(apis)
+        this.url = this.OAuth2Init()
     }
     public async OAuth2Init(){
-        let res = await google.client.init({
-            'apiKey': api_key.api_key,
-            'clientId': client_data.web.client_id,
-            'scope': this.scopes
-        });
+        let res = await new google.auth.OAuth2(
+            // 'apiKey': api_key.api_key,
+            this.oauth2Data.client_id,
+            this.oauth2Data.client_secret,
+            this.oauth2Data.redirect_url
+            // 'scope': this.scopes
+        ).generateAuthUrl({
+            // 'online' (default) or 'offline' (gets refresh_token)
+            access_type: 'online',
+           
+            // If you only need one scope you can pass it as a string
+            scope: this.scopes
+          });
+        
         console.log (res)
+        return res
         // this.oauth2Client = new google.auth.OAuth2(
         //     this.oauth2Data.client_id,
         //     this.oauth2Data.client_secret,
@@ -74,7 +86,7 @@ class GoogleApiTest extends React.Component<any,any,googleOAuth2>{
         
         return(
             <div>
-                
+                <a>{this.url}</a>
 
             </div>
         )
