@@ -24,3 +24,4 @@ yarn-error.log*
 
 /src/assets/client_secret.json
 /src/assets/api_key.json
+/src/assets/access_token.json

@@ -18,7 +18,7 @@ class Camera extends React.Component{
         let img = base64.decode(b64img);
         let blob = new Blob([img],{type: 'image/jpeg'})
 
-        store.sendGoogleMessage({type: 'uploadFile', img: blob})
+        // store.sendGoogleMessage({type: 'uploadFile', img: blob})
     }
 
     render(){

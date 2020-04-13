@@ -10,38 +10,38 @@ import { createStore } from 'redux'
 
 class LoginAuth extends React.Component{
     
-    async responseGoogle(response:any) {
-        let res:any;
-        console.log(response)
-        console.log(client_data.web.client_id)
-        let getAccessTokenStore = createStore(store.getAccessToken)
-        getAccessTokenStore.subscribe(() => console.log(getAccessTokenStore.getState()))
+    // async responseGoogle(response:any) {
+    //     let res:any;
+    //     console.log(response)
+    //     console.log(client_data.web.client_id)
+    //     // let getAccessTokenStore = createStore(store.getAccessToken)
+    //     getAccessTokenStore.subscribe(() => console.log(getAccessTokenStore.getState()))
         
-        getAccessTokenStore.dispatch(
-            {
-                type: "LoginCheck",
-                accessToken: (response.accessToken as string),
-                googleId: (response.googleId as string),
-                name: (response.profileObj.name as string),
-                imageUrl: (response.profileObj.imageUrl as string)
-            })
+    //     getAccessTokenStore.dispatch(
+    //         {
+    //             type: "LoginCheck",
+    //             accessToken: (response.accessToken as string),
+    //             googleId: (response.googleId as string),
+    //             name: (response.profileObj.name as string),
+    //             imageUrl: (response.profileObj.imageUrl as string)
+    //         })
 
-        //res = await store.sendGoogleMessage({type: 'createCloudFolder', img: 'none'})
-        res = await store.sendGoogleMessage({type: 'getAppFolder', img: 'none'})
-        console.log(res)
-    }
-    responseGoogleError(response:any){
-        return 'loginできませんでした'
-    }
-    checkAppFolder(){
-        let res: any;
-        res = store.sendGoogleMessage({type: 'getAppFolder', img: 'none'})
-        console.log(res)
-    }
+    //     //res = await store.sendGoogleMessage({type: 'createCloudFolder', img: 'none'})
+    //     res = await store.sendGoogleMessage({type: 'getAppFolder', img: 'none'})
+    //     console.log(res)
+    // }
+    // responseGoogleError(response:any){
+    //     return 'loginできませんでした'
+    // }
+    // checkAppFolder(){
+    //     let res: any;
+    //     res = store.sendGoogleMessage({type: 'getAppFolder', img: 'none'})
+    //     console.log(res)
+    // }
     render(){
         return(
             <div>
-                <GoogleLogin
+                {/* <GoogleLogin
                     clientId={ client_data.web.client_id }
                     buttonText="Login"
                     onSuccess={this.responseGoogle}
@@ -51,7 +51,7 @@ class LoginAuth extends React.Component{
                     scope={"https://www.googleapis.com/auth/drive"}
                 />
                 <div>{this.responseGoogleError}</div>
-                <button onClick={this.checkAppFolder}>checkfolder</button>
+                <button onClick={this.checkAppFolder}>checkfolder</button> */}
             </div>
         )
     }

@@ -9,7 +9,8 @@ import * as api_key from '../assets/api_key.json'
 import * as store from '../store'
 import { createStore } from 'redux'
 import { google } from 'googleapis'
-
+import * as token from '../assets/access_token.json'
+import SignIn from '../pages/signIn'
 
 interface googleOAuth2{
     client_id: string,
@@ -21,7 +22,7 @@ class GoogleApiTest extends React.Component<any,any,googleOAuth2>{
     constructor(
         props: any,
         public oauth2Data: googleOAuth2,
-        public oauth2Client:any,
+        public oAuth2Client:any,
         public scopes: any,
         public url: any = "none"
     ) {
@@ -39,37 +40,49 @@ class GoogleApiTest extends React.Component<any,any,googleOAuth2>{
         this.createUrl = this.createUrl.bind(this)
         this.OAuth2Init = this.OAuth2Init.bind(this)
         this.componentDidMount = this.componentDidMount.bind(this)
+        this.state = {
+            url: 'none'
+         }
     }
     public componentDidMount(){
-        const apis = google.getSupportedAPIs();
-        console.log(apis)
-        this.url = this.OAuth2Init()
+        this.authorize()
     }
-    public async OAuth2Init(){
-        let res = await new google.auth.OAuth2(
+    public authorize(){
+        this.oAuth2Client = new google.auth.OAuth2(
             // 'apiKey': api_key.api_key,
             this.oauth2Data.client_id,
             this.oauth2Data.client_secret,
             this.oauth2Data.redirect_url
             // 'scope': this.scopes
-        ).generateAuthUrl({
+        )
+        this.OAuth2Init()
+
+    }
+    public async OAuth2Init(){
+        
+        let res = this.oAuth2Client.generateAuthUrl({
             // 'online' (default) or 'offline' (gets refresh_token)
-            access_type: 'online',
-           
+            access_type: 'offline',
             // If you only need one scope you can pass it as a string
             scope: this.scopes
-          });
+        });
         
-        console.log (res)
-        return res
-        // this.oauth2Client = new google.auth.OAuth2(
-        //     this.oauth2Data.client_id,
-        //     this.oauth2Data.client_secret,
-        //     this.oauth2Data.redirect_url
-        // ).generateAuthUrl({
-        //     access_type: 'offline',
-        //     scope: this.scopes
+        // const rl = readline.createInterface({
+        //     input: process.stdin,
+        //     output: process.stdout,
+        // });
+        let token= 'none'
+        console.log(process.stdin)
+        // this.oAuth2Client()
+        // rl.question('Enter the code from that page here: ', (code)=>{
+        //     // rl.close
+        //     token = this.oAuth2Client.getToken(code)
+        //     callback(this.oAuth2Client)
         // })
+        console.log(token)
+        this.setState ({url: res})
+        // console.log (res)
+        return res
     }
 
     public createUrl(){
@@ -86,8 +99,8 @@ class GoogleApiTest extends React.Component<any,any,googleOAuth2>{
         
         return(
             <div>
-                <a>{this.url}</a>
-
+                <a href={this.state.url}>login</a>
+                
             </div>
         )
     }

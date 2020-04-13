@@ -7,18 +7,43 @@ import LoginAuth from '../src/components/loginAuth'
 //import '../src/components/loginAuth'
 import './store'
 import LogoutAuth from './components/logoutAuth';
-import GetCloud from './components/getCloudPhoto';
+
 import GoogleApiTest from './components/googleApiTest'
+// react-native
+// import { NativeRouter, Switch } from "react-router-native";
+import { Switch, Redirect } from 'react-router';
+// react-dom (what we'll use here)
+import { BrowserRouter, Route } from "react-router-dom";
+import  SignIn  from './pages/signIn'
+import GetCloudPhoto from './components/getCloudPhoto';
+import TakePicture from './pages/takePicture';
+import * as store from './store'
+import CloudFileView from './pages/cloudFileView';
 
 ReactDOM.render(
   <React.StrictMode>
-    {/* <Camera /> */}
-    {/* <LoginAuth/>
-    <LogoutAuth/> */}
-    <Camera></Camera>
-    <GetCloud></GetCloud>
-    <GoogleApiTest></GoogleApiTest>
-    {/* <div id='googleButton'></div> */}
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={TakePicture}>
+          {/* {
+            store.GoogleUserInfoInit.accessToken === 'None'?
+            <Redirect to="/signin" />: <SignIn />
+          } */}
+        </Route>
+        {/* <Route path="/code/:code" component={TakePicture}
+          // render={({match})=>(
+          //   <Redirect to={'/'}/>
+          // )}
+        >
+        </Route> */}
+        <Route exact path="/cloudlist" component={CloudFileView}></Route>
+        <Route exact path="/signin" component={SignIn}>
+          {/* {store.GoogleUserInfoInit.accessToken !== 'None'?
+          <Redirect to="/" />: <TakePicture />} */}
+        </Route>
+        
+      </Switch>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

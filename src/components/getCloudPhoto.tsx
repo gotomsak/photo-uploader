@@ -11,7 +11,7 @@ import axios, { AxiosInstance } from 'axios'
 //     name: string
 // }
 
-class GetPhoto extends React.Component<any,any>{
+class GetCloudPhoto extends React.Component<any,any>{
 
     constructor(
         props: any,
@@ -28,7 +28,7 @@ class GetPhoto extends React.Component<any,any>{
     }
 
     public async getCloudFiles(){
-        this.getPhotoFiles = await store.sendGoogleMessage({type:'getCloudPhoto', img: 'none'})
+        // this.getPhotoFiles = await store.sendGoogleMessage({type:'getCloudPhoto', img: 'none'})
         console.log(this.getPhotoFiles)
     }
 
@@ -65,4 +65,4 @@ class GetPhoto extends React.Component<any,any>{
 
 }
 
-export default GetPhoto
+export default GetCloudPhoto
