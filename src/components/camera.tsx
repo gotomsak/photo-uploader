@@ -3,6 +3,7 @@ import Webcam from 'react-webcam'
 import * as store from '../store'
 import * as base64 from 'urlsafe-base64'
 
+
 class Camera extends React.Component{
     
     public videoConstraints =  {
@@ -15,10 +16,38 @@ class Camera extends React.Component{
             store.ImageStateInit.img_src = screenshot
         }
         let b64img: any = screenshot?.split(',')[1]
-        let img = base64.decode(b64img);
-        let blob = new Blob([img],{type: 'image/jpeg'})
-
-        // store.sendGoogleMessage({type: 'uploadFile', img: blob})
+        // let img = base64.decode(b64img);
+        // let blob = new Blob([img],{type: 'image/jpeg'})
+        // console.log(blob)
+        this.sendBlobFile(b64img)
+    }
+    sendBlobFile(b64img: any){
+        console.log(store.driveFilesID.folder)
+        let parents: string[] = [store.driveFilesID.folder]
+        let metadata: any = {"name":"imagetest","parents": parents}
+        let body = '--foo_bar_baz\n'+
+                'Content-Type: application/json; charset=UTF-8\n\n'+
+                JSON.stringify(metadata) + '\n\n' +
+                '--foo_bar_baz\n'+
+                'Content-Transfer-Encoding: base64\n'+
+                'Content-Type: image/jpeg\n\n'+
+                b64img+'\n--foo_bar_baz--'
+        let body_length = body.length.toString()
+        console.log(store.TokensData.accessToken)
+        console.log(b64img)
+        return fetch(
+            'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart',
+            {
+            method: "POST",
+            headers: {
+                'Content-Type': 'multipart/related; boundary=foo_bar_baz',
+                'Content-Length': body_length,
+                'Authorization': 'Bearer ' + store.TokensData.accessToken
+            },
+            body: body
+        }).then((response: any)=>{
+            console.log(response)
+        })
     }
 
     render(){

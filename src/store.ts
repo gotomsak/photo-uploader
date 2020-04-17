@@ -7,21 +7,13 @@ import * as client_data from './assets/client_secret.json'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-/**
- * This is a reducer, a pure function with (state, action) => state signature.
- * It describes how an action transforms the state into the next state.
- *
- * The shape of the state is up to you: it can be a primitive, an array, an object,
- * or even an Immutable.js data structure. The only important part is that you should
- * not mutate the state object, but return a new object if the state changes.
- *
- * In this example, we use a `switch` statement and strings, but you can use a helper that
- * follows a different convention (such as function maps) if it makes sense for your
- * project.
- */
 
 interface ImageState{
     img_src: string
+}
+interface DriveFilesID{
+    img: string,
+    folder: string
 }
 
 interface GoogleUserInfo {
@@ -36,12 +28,18 @@ export interface SendGoogleMessage {
     type: string,
     img: any
 }
-
+interface Tokens{
+    accessToken: string
+}
 interface googleOAuth2{
     client_id: string,
     client_secret: string,
     redirect_url: string,
     scopes: any
+}
+
+export let TokensData: Tokens = {
+    accessToken: 'None'
 }
 
 export const apiKey = api_key.api_key
@@ -52,6 +50,10 @@ export let GoogleUserInfoInit: GoogleUserInfo = {
     googleId:'None',
     name:'None',
     imageUrl:'None'
+}
+export let driveFilesID: DriveFilesID = {
+    img: 'None',
+    folder: 'None'
 }
 
 export let ImageStateInit: ImageState = {

@@ -3,7 +3,7 @@ import * as store from '../store'
 
 
 class CloudFileView extends React.Component<any,any>{
-    
+
     constructor(
         props: any
     ){
@@ -13,7 +13,7 @@ class CloudFileView extends React.Component<any,any>{
         }
         this.render = this.render.bind(this)
     }
-    
+
     componentDidMount(){
         this.getFileList()
     }
