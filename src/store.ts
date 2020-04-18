@@ -7,7 +7,6 @@ import * as client_data from './assets/client_secret.json'
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-
 interface ImageState{
     img_src: string
 }
@@ -16,21 +15,19 @@ interface DriveFilesID{
     folder: string
 }
 
-interface GoogleUserInfo {
-    type: string,
-    accessToken: string,
-    googleId: string,
-    name: string,
-    imageUrl: string
+interface DateType {
+    year: number,
+    month: number,
+    date: number,
+    hour: number,
+    minute: number,
+    second: number
 }
 
-export interface SendGoogleMessage {
-    type: string,
-    img: any
-}
 interface Tokens{
     accessToken: string
 }
+
 interface googleOAuth2{
     client_id: string,
     client_secret: string,
@@ -44,13 +41,6 @@ export let TokensData: Tokens = {
 
 export const apiKey = api_key.api_key
 
-export let GoogleUserInfoInit: GoogleUserInfo = {
-    type: 'None',
-    accessToken:'None',
-    googleId:'None',
-    name:'None',
-    imageUrl:'None'
-}
 export let driveFilesID: DriveFilesID = {
     img: 'None',
     folder: 'None'
@@ -76,6 +66,15 @@ export let oauth2Data: googleOAuth2 = {
     ]
 }
 
+export let nowTime: DateType = {
+    year: 0,
+    month: 0,
+    date: 0,
+    hour: 0,
+    minute: 0,
+    second: 0
+}
+
 export let oAuth2Client: any = new google.auth.OAuth2(
     oauth2Data.client_id,
     oauth2Data.client_secret,
@@ -83,4 +82,5 @@ export let oAuth2Client: any = new google.auth.OAuth2(
 )
 
 export let drive:any = google.drive({version: 'v3', auth: oAuth2Client})
+
 

@@ -2,24 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import Camera from '../src/components/camera';
-import LoginAuth from '../src/components/loginAuth'
-//import '../src/components/loginAuth'
-import './store'
-import LogoutAuth from './components/logoutAuth';
 
-import GoogleApiTest from './components/googleApiTest'
-// react-native
-// import { NativeRouter, Switch } from "react-router-native";
 import { Switch, Redirect } from 'react-router';
-// react-dom (what we'll use here)
 import { BrowserRouter, Route } from "react-router-dom";
 import  SignIn  from './pages/signIn'
-import GetCloudPhoto from './components/getCloudPhoto';
 import TakePicture from './pages/takePicture';
 import * as store from './store'
+import * as dateTimeFunc from './utils/dateTimeFunc'
 import CloudFileView from './pages/cloudFileView';
 
+dateTimeFunc.nowTimeUpdate()
+setInterval(dateTimeFunc.nowTimeUpdate, 1000)
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
