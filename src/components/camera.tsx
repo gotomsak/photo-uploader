@@ -5,7 +5,7 @@ import * as base64 from 'urlsafe-base64'
 
 
 class Camera extends React.Component{
-    
+
     public videoConstraints =  {
         facingMode: "user"
     }
@@ -19,12 +19,19 @@ class Camera extends React.Component{
         // let img = base64.decode(b64img);
         // let blob = new Blob([img],{type: 'image/jpeg'})
         // console.log(blob)
-        this.sendBlobFile(b64img)
+        let imgName
+            = store.nowTime.year + "_"
+            + store.nowTime.month + "_"
+            + store.nowTime.date + " "
+            + store.nowTime.hour + ":"
+            + store.nowTime.minute + ":"
+            + store.nowTime.second
+        this.sendBlobFile(b64img,imgName)
     }
-    sendBlobFile(b64img: any){
+    sendBlobFile(b64img: any, imgName: string){
         console.log(store.driveFilesID.folder)
         let parents: string[] = [store.driveFilesID.folder]
-        let metadata: any = {"name":"imagetest","parents": parents}
+        let metadata: any = {"name":imgName,"parents": parents}
         let body = '--foo_bar_baz\n'+
                 'Content-Type: application/json; charset=UTF-8\n\n'+
                 JSON.stringify(metadata) + '\n\n' +
@@ -51,9 +58,9 @@ class Camera extends React.Component{
     }
 
     render(){
-        
+
         return (
-    
+
             <div>
                 <Webcam
                     videoConstraints={this.videoConstraints}
