@@ -12,37 +12,32 @@ class TakePicture extends React.Component<any,any>{
         this.render = this.render.bind(this)
         this.fileListViewTransition = this.fileListViewTransition.bind(this)
         this.createFolder = this.createFolder.bind(this)
-        this.getToDay = this.getToDay.bind(this)
 
         this.state = {
             res: false,
-            time: null,
+            time: (store.nowTime.year + "_"
+                    + store.nowTime.month + "_" + store.nowTime.date).toString(),
             rootDir: 'None',
             subDir: 'None'
         }
     }
-    
+
     componentDidMount(){
         this.codeCheck()
-        this.setState({time: this.getToDay()})
     }
 
     componentDidUpdate(prevProps:any, prevState:any){
         if(this.state.res === true && prevState.res !== this.state.res ){
-            this.checkFolder('photo-uploader', [], true)
+            this.checkFolder('photo-uploader', [])
         }
         if(this.state.rootDir !== 'None' && prevState.rootDir !== this.state.rootDir){
+            store.driveFilesID.folder = this.state.rootDir
             let parents: string[] = [store.driveFilesID.folder]
-            this.checkFolder(this.state.time, parents, false)
+            this.checkFolder(this.state.time, parents)
         }
         if(this.state.subDir !== 'None' && prevState.subDir !== this.state.subDir){
             store.driveFilesID.folder = this.state.subDir
         }
-    }
-
-    errGetToken(err: any){
-        console.log(err)
-        this.setState({res: false})
     }
 
     createFolder(folderName: any, parents: any){
@@ -57,19 +52,16 @@ class TakePicture extends React.Component<any,any>{
             if (err) {
                 console.error(err);
             } else {
-                console.log('Folder Id: ', file.data.id);
-                store.driveFilesID.folder = file.data.id
+                if(folderName === 'photo-uploader'){
+                    this.setState({rootDir: file.data.id})
+                }else{
+                    this.setState({subDir: file.data.id})
+                }
             }
         });
     }
 
-    getToDay(){
-        return (store.nowTime.year + "_"
-                + store.nowTime.month + "_" + store.nowTime.date).toString()
-    }
-
-    checkFolder(folderName: string, parents: any, root: boolean){
-
+    checkFolder(folderName: string, parents: any){
         store.drive.files.list({
             q: "name='" + folderName + "'",
             fileds:'nextPageToken, files(id, name)',
@@ -78,7 +70,7 @@ class TakePicture extends React.Component<any,any>{
             if(err){
                 console.error(err);
             } else {
-                if(root === true){
+                if(folderName==='photo-uploader'){
                     if(res.data.files.length === 0){
                         this.createFolder(folderName, parents)
                     }else{
@@ -93,11 +85,6 @@ class TakePicture extends React.Component<any,any>{
                 }
             }
         })
-    }
-    async tokenCheck(){
-        let res = await store.oAuth2Client.getAccessToken()
-        store.TokensData.accessToken = res.token
-        console.log(res)
     }
 
     codeCheck(){
@@ -114,7 +101,6 @@ class TakePicture extends React.Component<any,any>{
                 store.TokensData.accessToken = token.access_token
                 this.setState({res: true})
             }
-            
         })
     }
 
