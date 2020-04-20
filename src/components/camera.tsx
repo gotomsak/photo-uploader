@@ -16,9 +16,6 @@ class Camera extends React.Component{
             store.ImageStateInit.img_src = screenshot
         }
         let b64img: any = screenshot?.split(',')[1]
-        // let img = base64.decode(b64img);
-        // let blob = new Blob([img],{type: 'image/jpeg'})
-        // console.log(blob)
         let imgName
             = store.nowTime.year + "_"
             + store.nowTime.month + "_"
