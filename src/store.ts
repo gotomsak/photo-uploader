@@ -56,13 +56,6 @@ export let oauth2Data: googleOAuth2 = {
     redirect_url: 'https://localhost:3000',
     scopes: [
         'https://www.googleapis.com/auth/drive',
-        'https://www.googleapis.com/auth/drive.appdata',
-        'https://www.googleapis.com/auth/drive.file',
-        'https://www.googleapis.com/auth/drive.metadata',
-        // 'https://www.googleapis.com/auth/drive.metadata.readonly',
-        // 'https://www.googleapis.com/auth/drive.photos.readonly',
-        // 'https://www.googleapis.com/auth/drive.readonly',
-        'https://www.googleapis.com/auth/drive.scripts'
     ]
 }
 
