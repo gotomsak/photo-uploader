@@ -12,11 +12,13 @@ class TakePicture extends React.Component<any,any>{
         this.render = this.render.bind(this)
         this.fileListViewTransition = this.fileListViewTransition.bind(this)
         this.createFolder = this.createFolder.bind(this)
-        this.checkSubFolder = this.checkSubFolder.bind(this)
         this.getToDay = this.getToDay.bind(this)
+
         this.state = {
             res: false,
-            time: null
+            time: null,
+            rootDir: 'None',
+            subDir: 'None'
         }
     }
     
@@ -25,31 +27,28 @@ class TakePicture extends React.Component<any,any>{
         this.setState({time: this.getToDay()})
     }
 
+    componentDidUpdate(prevProps:any, prevState:any){
+        if(this.state.res === true && prevState.res !== this.state.res ){
+            this.checkFolder('photo-uploader', [], true)
+        }
+        if(this.state.rootDir !== 'None' && prevState.rootDir !== this.state.rootDir){
+            let parents: string[] = [store.driveFilesID.folder]
+            this.checkFolder(this.state.time, parents, false)
+        }
+        if(this.state.subDir !== 'None' && prevState.subDir !== this.state.subDir){
+            store.driveFilesID.folder = this.state.subDir
+        }
+    }
+
     errGetToken(err: any){
         console.log(err)
         this.setState({res: false})
     }
 
-    createFolder(){
+    createFolder(folderName: any, parents: any){
         store.drive.files.create({
             resource: {
-                name: 'photo-uploader',
-                mimeType: 'application/vnd.google-apps.folder'
-            },
-            fields: 'id'
-        }, (err: any, file: any) => {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log('Folder Id: ', file.data.id);
-            }
-        });
-    }
-    createSubFolder(){
-        let parents: string[] = [store.driveFilesID.folder]
-        store.drive.files.create({
-            resource: {
-                name: this.state.time,
+                name: folderName,
                 mimeType: 'application/vnd.google-apps.folder',
                 parents: parents
             },
@@ -59,6 +58,7 @@ class TakePicture extends React.Component<any,any>{
                 console.error(err);
             } else {
                 console.log('Folder Id: ', file.data.id);
+                store.driveFilesID.folder = file.data.id
             }
         });
     }
@@ -68,40 +68,29 @@ class TakePicture extends React.Component<any,any>{
                 + store.nowTime.month + "_" + store.nowTime.date).toString()
     }
 
-    checkFolder(){
-        store.drive.files.list({
-            q: "name='photo-uploader'",
-            fields: 'nextPageToken, files(id, name)',
-        }, (err:any, res:any) => {
-            if (err) {
-                console.error(err);
-            } else {
-                console.log(res)
-                if(res.data.files.length === 0){
-                    this.createFolder()
-                }
-                store.driveFilesID.folder = res.data.files[0].id
-            }
-        });
-    }
+    checkFolder(folderName: string, parents: any, root: boolean){
 
-    checkSubFolder(){
-        let parents: string[] = [store.driveFilesID.folder]
-        console.log('checkSubFolder')
         store.drive.files.list({
-            q: "name='" + this.state.time + "'",
+            q: "name='" + folderName + "'",
             fileds:'nextPageToken, files(id, name)',
             parents: parents
         },(err:any,res:any) => {
             if(err){
                 console.error(err);
             } else {
-                console.log(res)
-                if(res.data.files.length === 0){
-                    // this.createFolder()
-                    this.createSubFolder()
+                if(root === true){
+                    if(res.data.files.length === 0){
+                        this.createFolder(folderName, parents)
+                    }else{
+                        this.setState({rootDir: res.data.files[0].id})
+                    }
+                }else{
+                    if(res.data.files.length === 0){
+                        this.createFolder(folderName, parents)
+                    }else{
+                        this.setState({subDir: res.data.files[0].id})
+                    }
                 }
-                //store.driveFilesID.folder = res.data.files[0].id
             }
         })
     }
@@ -118,13 +107,14 @@ class TakePicture extends React.Component<any,any>{
         store.oAuth2Client.getToken(code, (err:any,token:any)=>{
             if (err){
                 this.setState({res: false})
-                return console.log(err)
+                console.log(err)
             }
             store.oAuth2Client.setCredentials(token);
-            this.tokenCheck()
-            this.checkFolder()
-            this.checkSubFolder()
-            this.setState({res: true})
+            if (token !== null){
+                store.TokensData.accessToken = token.access_token
+                this.setState({res: true})
+            }
+            
         })
     }
 

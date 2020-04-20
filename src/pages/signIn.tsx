@@ -14,9 +14,7 @@ class SignIn extends React.Component<any,any>{
             url: 'None'
         }
     }
-    getNowTime(){
-        return (store.nowTime.hour+"_"+store.nowTime.minute).toString()
-    }
+
     componentDidMount(){
         this.getURL()
     }
@@ -36,7 +34,6 @@ class SignIn extends React.Component<any,any>{
             <div>
                 <h1>サインインページ</h1>
                 <a href={this.state.url}>signin</a>
-                <h2>{this.getNowTime()}</h2>
             </div>
 
         )
