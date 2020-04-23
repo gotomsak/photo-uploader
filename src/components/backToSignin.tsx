@@ -9,7 +9,6 @@ class BackToSignin extends React.Component<any,any>{
                 <h1>Signinしてください</h1>
                 <Link to='signin'>
                     <button className='back-button'>Signinページへ</button>
-                    
                 </Link>
             </div>
 

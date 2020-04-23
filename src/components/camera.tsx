@@ -2,14 +2,35 @@ import React, { VideoHTMLAttributes } from 'react'
 import Webcam from 'react-webcam'
 import * as store from '../store'
 import * as base64 from 'urlsafe-base64'
-
-
-class Camera extends React.Component{
+import './camera.css'
+import EventListener from 'react-event-listener'
+class Camera extends React.Component<any,any>{
+    constructor(props:any){
+        super(props)
+        this.render = this.render.bind(this)
+        this.state={
+            sendPicture:false
+        }
+    }
 
     public videoConstraints =  {
-        facingMode: "user"
+        facingMode: "environment",
     }
+    public windowSize = {
+        width: window.innerWidth,
+        height: window.innerHeight - 70
+    }
+
+    public handleResize = () => {
+        // console.info(
+        //   `window height:width=${window.innerHeight}:${window.innerWidth}`,
+        // );
+        this.windowSize.width = window.innerWidth
+        this.windowSize.height = window.innerHeight
+    };
+    
     public capture = () => {
+        this.setState({sendPicture: true})
         const screenshot = (this.refs.webcam as Webcam).getScreenshot();
         console.log(screenshot)
         if (screenshot){
@@ -51,23 +72,32 @@ class Camera extends React.Component{
             body: body
         }).then((response: any)=>{
             console.log(response)
+            this.setState({sendPicture:false})
         })
     }
 
     render(){
-
+        // let cameraID = document.getElementById('camera')
+        // console.log(cameraID?.style.backgroundColor)
         return (
 
-            <div>
+            <div id='camera'>
+                <EventListener target='window' onResize={this.handleResize}></EventListener>
                 <Webcam
                     videoConstraints={this.videoConstraints}
                     ref={"webcam"}
                     screenshotFormat="image/jpeg"
                     audio={false}
-                    height={720}
-                    width={1280}
+                    height={this.windowSize.height}
+                    width={this.windowSize.width}
                 />
-                <button onClick={this.capture}>Capture photo</button>
+                <div id='capture-btn-par'>
+                    {this.state.sendPicture
+                        ? <h1 id='img-sending'>sending</h1>
+                        :<button onClick={this.capture} id="capture-btn"></button>
+                    }
+                </div>
+                
             </div>
         );
     }

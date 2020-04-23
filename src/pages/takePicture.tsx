@@ -5,6 +5,7 @@ import * as store from '../store'
 import { withRouter, Link } from 'react-router-dom';
 import { sourcerepo } from 'googleapis/build/src/apis/sourcerepo';
 import BackToSignin from '../components/backToSignin'
+import './takePicture.css'
 
 class TakePicture extends React.Component<any,any>{
     constructor(props:any){
@@ -113,9 +114,9 @@ class TakePicture extends React.Component<any,any>{
 
     render(){
         return(
-            <div>
+            <div id='take-picture'>
                 {this.state.res
-                ?<div><Camera></Camera> <Link to='cloudlist'><button>cloudFileView</button></Link></div>
+                ?<Camera></Camera>
                 :<BackToSignin></BackToSignin>
                 }
                 {/* <button onClick={this.fileListViewTransition}>viewCloudFile</button> */}
