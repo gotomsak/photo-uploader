@@ -32,14 +32,15 @@ class SignIn extends React.Component<any,any>{
     render(){
         return (
           <div className="signin">
-            <h1>サインインページ</h1>
-            
-            <div id="customBtn">
-                <a href={this.state.url} id="signin-button">
-                <span className="icon"></span>
-                <span className="buttonText">Google</span>
-                </a>
-            </div>
+                <h1>サインイン</h1>
+                <div id="signin-select">
+                    <div id="customBtn">
+                        <a href={this.state.url} id="signin-button">
+                        <span className="icon"></span>
+                        <span className="buttonText">Google</span>
+                        </a>
+                    </div>
+                </div>
             {/* <div className="abcRioButton abcRioButtonBlue" style={{height: "50px", width: "240px"}}>
             <div className="abcRioButtonContentWrapper">
               <div className="abcRioButtonIcon" style={{padding:"15px"}}>

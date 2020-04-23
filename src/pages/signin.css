@@ -1,8 +1,27 @@
 
 @media screen and (min-width: 480px){
+    #signin-select{
+        /* display: flexbox; */
+        position: absolute;
+        margin: auto;
+        height: 300px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
     .signin{
         
-    }
+        margin: auto;
+        border: 1px solid #aaa;
+        width: 80%;
+        height: 80%;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        position: absolute;
+        text-align: center;
+    } 
     #customBtn {
         display: inline-block;
         background: white;
@@ -29,7 +48,7 @@
         vertical-align: middle;
         width: 42px;
         height: 42px;
-      }
+    }
     span.buttonText {
         display: inline-block;
         vertical-align: middle;
@@ -43,8 +62,17 @@
 }
 
 @media screen and (max-width: 479px){
-    
+    #signin-select{
+        /* display: flexbox; */
+        position: absolute;
+        margin: auto;
+        height: 300px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+    }
     .signin{
+        
         margin: auto;
         border: 1px solid #aaa;
         width: 80%;
@@ -54,6 +82,7 @@
         left: 0;
         right: 0;
         position: absolute;
+        text-align: center;
     }
     #customBtn {
         display: inline-block;
@@ -64,6 +93,7 @@
         border: thin solid #888;
         box-shadow: 1px 1px 1px grey;
         white-space: nowrap;
+        
     }
     #signin-button{
         max-width: 100%;
