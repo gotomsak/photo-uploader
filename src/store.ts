@@ -53,7 +53,7 @@ export let ImageStateInit: ImageState = {
 export let oauth2Data: googleOAuth2 = {
     client_id: client_data.web.client_id,
     client_secret: client_data.web.client_secret,
-    redirect_url: 'https://photoup.gotomsak.work/oauth_google&',
+    redirect_url: 'https://photoup.gotomsak.work',
     scopes: [
         'https://www.googleapis.com/auth/drive',
     ]
